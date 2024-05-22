@@ -26,6 +26,14 @@ pub struct questionTranslations;
 )]
 pub struct questionEditorData;
 
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "graphql/console/panelConfigS.graphql",
+    query_path = "graphql/console/panelConfigQ.graphql",
+    response_derives = "Debug"
+)]
+pub struct consolePanelConfig;
+
 #[cfg(test)]
 mod test {
     use crate::graphql::request::get;
@@ -33,20 +41,18 @@ mod test {
     use super::*;
 
     #[tokio::test]
-    async fn test_calendar_task_schedule() -> Result<(), Box<dyn std::error::Error>> {
-        let url = dotenvy::var("LEETCODE_URL")?;
+    async fn test_calendar_task_schedule() {
+        let url = dotenvy::var("LEETCODE_URL").unwrap();
         let response_body =
             get::<CalendarTaskSchedule>(&url, calendar_task_schedule::Variables { days: 0 }).await;
         assert_eq!(response_body.errors, None);
 
         println!("{response_body:?}");
-
-        Ok(())
     }
 
     #[tokio::test]
-    async fn test_question_translations() -> Result<(), Box<dyn std::error::Error>> {
-        let url = dotenvy::var("LEETCODE_URL")?;
+    async fn test_question_translations() {
+        let url = dotenvy::var("LEETCODE_URL").unwrap();
         let response_body = get::<questionTranslations>(
             &url,
             question_translations::Variables {
@@ -57,13 +63,11 @@ mod test {
         assert_eq!(response_body.errors, None);
 
         println!("{response_body:?}");
-
-        Ok(())
     }
 
     #[tokio::test]
-    async fn test_question_editor_data() -> Result<(), Box<dyn std::error::Error>> {
-        let url = dotenvy::var("LEETCODE_URL")?;
+    async fn test_question_editor_data() {
+        let url = dotenvy::var("LEETCODE_URL").unwrap();
         let response_body = get::<questionEditorData>(
             &url,
             question_editor_data::Variables {
@@ -74,7 +78,21 @@ mod test {
         assert_eq!(response_body.errors, None);
 
         println!("{response_body:?}");
+    }
 
-        Ok(())
+    #[tokio::test]
+    async fn test_console_panel_config() {
+        let url = dotenvy::var("LEETCODE_URL").unwrap();
+        let response_body = get::<consolePanelConfig>(
+            &url,
+            console_panel_config::Variables {
+                title_slug: "find-players-with-zero-or-one-losses".to_string(),
+            },
+        )
+        .await;
+
+        assert_eq!(response_body.errors, None);
+
+        println!("{response_body:?}");
     }
 }
