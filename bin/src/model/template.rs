@@ -1,6 +1,6 @@
 pub struct CodeTemplate {
     // 模板内容
-    content: String,
+    pub content: String,
 }
 
 impl CodeTemplate {

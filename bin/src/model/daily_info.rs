@@ -1,8 +1,11 @@
+use super::example::Example;
+
+#[derive(Debug)]
 pub struct DailyInfo {
-    id: u32,
-    link: String,
-    name: String,
-    slug: String,
+    pub id: u32,
+    pub link: String,
+    pub name: String,
+    pub slug: String,
 }
 
 impl DailyInfo {
@@ -14,19 +17,43 @@ impl DailyInfo {
             slug,
         }
     }
-
-    pub fn url(&self) -> &str {
-        &self.link
-    }
 }
 
+#[derive(Debug)]
 pub struct QuestionInfo {
-    base_info: DailyInfo,
-    content: String,
-    difficulty: String,
-    desc: String,
-    example: String,
-    explain: String,
-    similar_questions: Vec<DailyInfo>,
-    title: String,
+    pub base_info: DailyInfo,
+    pub content: String,
+    pub template: String,
+    pub examples: Vec<Example>,
+}
+
+impl QuestionInfo {
+    pub fn new(
+        base_info: DailyInfo,
+        content: String,
+        template: String,
+        examples: Vec<Example>,
+    ) -> Self {
+        QuestionInfo {
+            base_info,
+            content,
+            template,
+            examples,
+        }
+    }
+
+    pub fn to_string(self) -> String {
+        let line = self.content.trim().split('\n');
+
+        let comment = line
+            .into_iter()
+            .map(|s| "/// ".to_string() + s)
+            .collect::<Vec<_>>()
+            .join("\n")
+            .to_string();
+        format!(
+            "/// {}.{}\n///\n/// {}\nstruct Solution;\n\n{}\n\n#[cfg(test)]\nmod test {{\n\n    #[test]\n    fn tests() {{\n\n    }}\n}}",
+            self.base_info.id, self.base_info.name, comment, self.template
+        )
+    }
 }

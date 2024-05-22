@@ -2,12 +2,13 @@ use graphql_client::{GraphQLQuery, Response};
 use reqwest::Client;
 
 use crate::{
-    graphql::schema::{questionEditorData, questionTranslations},
-    model::{daily_info::DailyInfo, question::Question, template::CodeTemplate},
+    graphql::schema::{console_panel_config, questionEditorData, questionTranslations},
+    model::{daily_info::DailyInfo, example::Example, question::Question, template::CodeTemplate},
 };
 
 use super::schema::{
-    calendar_task_schedule, question_editor_data, question_translations, CalendarTaskSchedule,
+    calendar_task_schedule, consolePanelConfig, question_editor_data, question_translations,
+    CalendarTaskSchedule,
 };
 
 pub async fn get<Q: GraphQLQuery>(url: &str, variables: Q::Variables) -> Response<Q::ResponseData> {
@@ -61,7 +62,8 @@ pub async fn get_question_translations(slug: &str, url: &str) -> Question {
     )
 }
 
-async fn get_question_editor_data(slug: &str, url: &str) -> Option<CodeTemplate> {
+// 此接口只需要获得代码模板
+pub async fn get_question_editor_data(slug: &str, url: &str) -> Option<CodeTemplate> {
     let data = get::<questionEditorData>(
         url,
         question_editor_data::Variables {
@@ -81,4 +83,29 @@ async fn get_question_editor_data(slug: &str, url: &str) -> Option<CodeTemplate>
     }
 
     None
+}
+
+pub async fn get_example_tests(slug: &str, url: &str) -> Vec<Example> {
+    let data = get::<consolePanelConfig>(
+        url,
+        console_panel_config::Variables {
+            title_slug: slug.to_string(),
+        },
+    )
+    .await
+    .data
+    .unwrap();
+
+    let mut example_tests = vec![];
+
+    let question = data.question.unwrap();
+
+    let input_example = question.example_testcases.unwrap();
+    let output_example = question.sample_test_case.unwrap();
+
+    for (input, output) in input_example.split('\n').zip(output_example.split('\n')) {
+        example_tests.push(Example::new(input.to_string(), output.to_string()));
+    }
+
+    example_tests
 }
