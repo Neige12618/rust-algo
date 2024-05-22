@@ -1,0 +1,10 @@
+query CalendarTaskSchedule($days: Int!) {
+  calendarTaskSchedule(days: $days) {
+    dailyQuestions {
+      id
+      name
+      slug
+      link
+    }
+  }
+}

@@ -1,0 +1,12 @@
+schema {
+  query: Query
+}
+
+type Query {
+  question(titleSlug: String!): Question
+}
+
+type Question {
+  translatedTitle: String
+  translatedContent: String
+}

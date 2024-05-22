@@ -4,4 +4,11 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+tokio = { version = "*", features = ["rt-multi-thread", "macros", "fs"] }
+reqwest = { version = "*", features = ["json"] }
+graphql_client = { version = "*" }
+dotenvy = { version = "*" }
+serde = { version = "*", features = ["derive"] }
+
+[dev-dependencies]
 "solution" = { path = "../solution" }

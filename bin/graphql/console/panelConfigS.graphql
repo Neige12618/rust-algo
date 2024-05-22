@@ -1,0 +1,20 @@
+schema {
+  query: Query
+}
+
+type Query {
+  question(titleSlug: String!): Question
+}
+
+type Question {
+  questionId: String
+  questionFrontendId: String
+  questionTitle: String
+  enableRunCode: Boolean
+  enableSubmit: Boolean
+  enableTestMode: Boolean
+  jsonExampleTestcases: String
+  exampleTestcases: String
+  metaData: String
+  sampleTestCase: String
+}

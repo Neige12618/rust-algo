@@ -1,0 +1,14 @@
+query consolePanelConfig($titleSlug: String!) {
+  question(titleSlug: $titleSlug) {
+    questionId
+    questionFrontendId
+    questionTitle
+    enableRunCode
+    enableSubmit
+    enableTestMode
+    jsonExampleTestcases
+    exampleTestcases
+    metaData
+    sampleTestCase
+  }
+}

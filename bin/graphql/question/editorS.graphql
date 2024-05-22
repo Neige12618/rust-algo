@@ -1,0 +1,23 @@
+schema {
+  query: Query
+}
+
+type Query {
+  question(titleSlug: String!): Question
+}
+
+type Question {
+  questionId: String
+  questionFrontendId: String
+  codeSnippets: [CodeSnippet]
+  envInfo: String
+  enableRunCode: Boolean
+  hasFrontendPreview: Boolean
+  frontendPreviews: String
+}
+
+type CodeSnippet {
+  lang: String
+  langSlug: String
+  code: String
+}

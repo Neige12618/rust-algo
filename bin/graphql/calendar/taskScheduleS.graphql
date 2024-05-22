@@ -1,0 +1,18 @@
+schema {
+  query: Query
+}
+
+type Query {
+  calendarTaskSchedule(days: Int!): CalendarTaskSchedule
+}
+
+type CalendarTaskSchedule {
+  dailyQuestions: [Task]
+}
+
+type Task {
+  id: ID
+  name: String
+  slug: String
+  link: String
+}
