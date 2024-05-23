@@ -7,10 +7,18 @@
 在根目录下运行
 
 ```shell
-cargo run
+cargo run fetch
 ```
 
 从 leetcode 获取每日一题，并保存到 `solution/solution<solution_id>.rs`
+
+执行
+
+```shell
+cargo run submit
+```
+
+提交当天的题目
 
 ## 测试
 
