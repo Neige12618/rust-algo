@@ -3,7 +3,9 @@ use reqwest::Client;
 
 use crate::{
     graphql::schema::{console_panel_config, questionEditorData, questionTranslations},
-    model::{daily_info::DailyInfo, example::Example, question::Question, template::CodeTemplate},
+    model::{
+        daily_info::QuestionBaseInfo, example::Example, question::Question, template::CodeTemplate,
+    },
 };
 
 use super::schema::{
@@ -20,7 +22,7 @@ pub async fn get<Q: GraphQLQuery>(url: &str, variables: Q::Variables) -> Respons
     response_body
 }
 
-pub async fn get_daily_info(url: &str) -> DailyInfo {
+pub async fn get_question_base_info(url: &str) -> QuestionBaseInfo {
     let data = get::<CalendarTaskSchedule>(url, calendar_task_schedule::Variables { days: 0 })
         .await
         .data
@@ -36,7 +38,7 @@ pub async fn get_daily_info(url: &str) -> DailyInfo {
         .expect("No questions found")
         .expect("No question found");
 
-    DailyInfo::new(
+    QuestionBaseInfo::new(
         first_question.id.unwrap().parse().unwrap(),
         first_question.link.unwrap(),
         first_question.name.unwrap(),
@@ -63,7 +65,7 @@ pub async fn get_question_translations(slug: &str, url: &str) -> Question {
 }
 
 // 此接口只需要获得代码模板
-pub async fn get_question_editor_data(slug: &str, url: &str) -> Option<CodeTemplate> {
+pub async fn get_question_code_template(slug: &str, url: &str) -> Option<CodeTemplate> {
     let data = get::<questionEditorData>(
         url,
         question_editor_data::Variables {
@@ -83,6 +85,21 @@ pub async fn get_question_editor_data(slug: &str, url: &str) -> Option<CodeTempl
     }
 
     None
+}
+
+// 此接口只需要获得代码模板
+pub async fn get_question_backend_id(slug: &str, url: &str) -> usize {
+    let data = get::<questionEditorData>(
+        url,
+        question_editor_data::Variables {
+            title_slug: slug.to_string(),
+        },
+    )
+    .await
+    .data
+    .unwrap();
+
+    data.question.unwrap().question_id.unwrap().parse().unwrap()
 }
 
 pub async fn get_example_tests(slug: &str, url: &str) -> Vec<Example> {

@@ -9,6 +9,8 @@ reqwest = { version = "*", features = ["json"] }
 graphql_client = { version = "*" }
 dotenvy = { version = "*" }
 serde = { version = "*", features = ["derive"] }
+serde_json = { version = "*" }
+clap = { version = "*", features = ["derive"] }
 
 [dev-dependencies]
 "solution" = { path = "../solution" }

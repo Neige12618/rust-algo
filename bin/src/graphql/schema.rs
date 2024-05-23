@@ -42,7 +42,8 @@ mod test {
 
     #[tokio::test]
     async fn test_calendar_task_schedule() {
-        let url = dotenvy::var("LEETCODE_URL").unwrap();
+        let url = dotenvy::var("LEETCODE_BASE_URL").unwrap();
+        let url = format!("{}/graphql", url);
         let response_body =
             get::<CalendarTaskSchedule>(&url, calendar_task_schedule::Variables { days: 0 }).await;
         assert_eq!(response_body.errors, None);
@@ -52,7 +53,8 @@ mod test {
 
     #[tokio::test]
     async fn test_question_translations() {
-        let url = dotenvy::var("LEETCODE_URL").unwrap();
+        let url = dotenvy::var("LEETCODE_BASE_URL").unwrap();
+        let url = format!("{}/graphql", url);
         let response_body = get::<questionTranslations>(
             &url,
             question_translations::Variables {
@@ -67,7 +69,8 @@ mod test {
 
     #[tokio::test]
     async fn test_question_editor_data() {
-        let url = dotenvy::var("LEETCODE_URL").unwrap();
+        let url = dotenvy::var("LEETCODE_BASE_URL").unwrap();
+        let url = format!("{}/graphql", url);
         let response_body = get::<questionEditorData>(
             &url,
             question_editor_data::Variables {
@@ -82,7 +85,8 @@ mod test {
 
     #[tokio::test]
     async fn test_console_panel_config() {
-        let url = dotenvy::var("LEETCODE_URL").unwrap();
+        let url = dotenvy::var("LEETCODE_BASE_URL").unwrap();
+        let url = format!("{}/graphql", url);
         let response_body = get::<consolePanelConfig>(
             &url,
             console_panel_config::Variables {

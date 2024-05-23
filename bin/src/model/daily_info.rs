@@ -1,16 +1,16 @@
 use super::example::Example;
 
 #[derive(Debug)]
-pub struct DailyInfo {
-    pub id: u32,
+pub struct QuestionBaseInfo {
+    pub id: usize,
     pub link: String,
     pub name: String,
     pub slug: String,
 }
 
-impl DailyInfo {
-    pub fn new(id: u32, link: String, name: String, slug: String) -> Self {
-        DailyInfo {
+impl QuestionBaseInfo {
+    pub fn new(id: usize, link: String, name: String, slug: String) -> Self {
+        QuestionBaseInfo {
             id,
             link,
             name,
@@ -21,7 +21,7 @@ impl DailyInfo {
 
 #[derive(Debug)]
 pub struct QuestionInfo {
-    pub base_info: DailyInfo,
+    pub base_info: QuestionBaseInfo,
     pub content: String,
     pub template: String,
     pub examples: Vec<Example>,
@@ -29,7 +29,7 @@ pub struct QuestionInfo {
 
 impl QuestionInfo {
     pub fn new(
-        base_info: DailyInfo,
+        base_info: QuestionBaseInfo,
         content: String,
         template: String,
         examples: Vec<Example>,
