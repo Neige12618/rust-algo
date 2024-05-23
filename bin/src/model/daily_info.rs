@@ -52,8 +52,8 @@ impl QuestionInfo {
             .join("\n")
             .to_string();
         format!(
-            "/// {}.{}\n///\n/// {}\nstruct Solution;\n\n{}\n\n#[cfg(test)]\nmod test {{\n\n    #[test]\n    fn tests() {{\n\n    }}\n}}",
-            self.base_info.id, self.base_info.name, comment, self.template
+            "/// {}.{}\n///\n{}\n/// <a href=\"{}\">{}</a>\npub struct Solution;\n\n{}\n\n#[cfg(test)]\nmod test {{\n    use super::*;\n    #[test]\n    fn test_1() {{\n\n    }}\n}}",
+            self.base_info.id, self.base_info.name, comment, self.base_info.link, self.base_info.name, self.template
         )
     }
 }
