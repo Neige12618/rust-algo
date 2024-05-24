@@ -17,6 +17,7 @@ pub struct Solution;
 
 use std::collections::HashMap;
 
+/// 哈希
 impl Solution {
     pub fn find_winners(matches: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
         let mut result = vec![vec![], vec![]];

@@ -10,6 +10,7 @@
 /// https://leetcode.cn/problems/h-index/description/
 pub struct Solution;
 
+/// 排序
 impl Solution {
     pub fn h_index(mut citations: Vec<i32>) -> i32 {
         citations.sort_unstable();
