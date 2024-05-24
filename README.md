@@ -42,7 +42,7 @@ cargo run fetch -f <search_keyword>
 对于非每日一题的题目，可以执行
 
 ```
-cargo run submit -i <solution_id>
+cargo run submit -i <solution_id or title_slug>
 ```
 
 来根据 solution_id 搜索题目，并提交
