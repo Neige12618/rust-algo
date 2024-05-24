@@ -28,12 +28,29 @@ pub async fn create_template_file(daily_info: QuestionInfo) {
         .await
         .unwrap();
 
-    lib_file
-        .write(format!("pub mod solution{};\n", &question_id).as_bytes())
-        .await
-        .unwrap();
-    lib_file.flush().await.unwrap();
+    let space = question_id.find(' ');
+    let no_space = question_id.replace(' ', "");
 
+    if space.is_some() {
+        lib_file
+            .write(
+                format!(
+                    "#[path = \"solution{}.rs\"]\npub mod solution{};\n",
+                    &question_id,
+                    &no_space.to_lowercase()
+                )
+                .as_bytes(),
+            )
+            .await
+            .unwrap();
+        lib_file.flush().await.unwrap();
+    } else {
+        lib_file
+            .write(format!("pub mod solution{};\n", &question_id).as_bytes())
+            .await
+            .unwrap();
+    }
+    lib_file.flush().await.unwrap();
     println!("file created: {}", file_path.to_str().unwrap());
 }
 
