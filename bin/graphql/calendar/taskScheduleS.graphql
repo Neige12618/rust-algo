@@ -7,12 +7,12 @@ type Query {
 }
 
 type CalendarTaskSchedule {
-  dailyQuestions: [Task]
+  dailyQuestions: [Task!]!
 }
 
 type Task {
-  id: ID
-  name: String
-  slug: String
-  link: String
+  id: ID!
+  name: String!
+  slug: String!
+  link: String!
 }

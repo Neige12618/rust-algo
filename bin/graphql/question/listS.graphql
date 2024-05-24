@@ -4,18 +4,18 @@ type Query {
     limit: Int!
     skip: Int!
     filters: QuestionListFilterInput
-  ): ProblemsetQuestionListResponse
+  ): ProblemsetQuestionListResponse!
 }
 
 type ProblemsetQuestionListResponse {
   hasMore: Boolean
   total: Int
-  questions: [Question]
+  questions: [Question!]!
 }
 
 type Question {
   acRate: Float
-  difficulty: String
+  difficulty: String!
   freqBar: Float
   frontendQuestionId: String!
   isFavor: Boolean
@@ -23,7 +23,7 @@ type Question {
   solutionNum: Int
   status: String
   title: String
-  titleCn: String
+  titleCn: String!
   titleSlug: String!
   topicTags: [TopicTag]
   extra: QuestionExtra

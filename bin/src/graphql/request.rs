@@ -29,20 +29,15 @@ pub async fn get_question_base_info(url: &str) -> QuestionBaseInfo {
         .unwrap();
 
     let task_schedule = data.calendar_task_schedule.expect("No task_schedule found");
-    let mut daily_questions = task_schedule
-        .daily_questions
-        .expect("daily_questions not found");
+    let mut daily_questions = task_schedule.daily_questions;
 
-    let first_question = daily_questions
-        .pop()
-        .expect("No questions found")
-        .expect("No question found");
+    let first_question = daily_questions.pop().expect("No questions found");
 
     QuestionBaseInfo::new(
-        first_question.id.unwrap().parse().unwrap(),
-        first_question.link.unwrap(),
-        first_question.name.unwrap(),
-        first_question.slug.unwrap(),
+        first_question.id.parse().unwrap(),
+        first_question.link,
+        first_question.name,
+        first_question.slug,
     )
 }
 
@@ -56,12 +51,9 @@ pub async fn get_question_translations(slug: &str, url: &str) -> Question {
     .await
     .data
     .unwrap();
-    let question = data.question.unwrap();
+    let question = data.question;
 
-    Question::new(
-        question.translated_title.unwrap(),
-        question.translated_content.unwrap(),
-    )
+    Question::new(question.translated_title, question.translated_content)
 }
 
 // 此接口只需要获得代码模板
@@ -76,11 +68,11 @@ pub async fn get_question_code_template(slug: &str, url: &str) -> Option<CodeTem
     .data
     .unwrap();
 
-    let code_snippet = data.question.unwrap().code_snippets.unwrap();
+    let code_snippet = data.question.code_snippets;
 
-    for i in code_snippet.into_iter().filter_map(|x| x) {
-        if i.lang.unwrap() == "Rust".to_string() {
-            return Some(CodeTemplate::new(i.code.unwrap()));
+    for i in code_snippet.into_iter() {
+        if i.lang == "Rust".to_string() {
+            return Some(CodeTemplate::new(i.code));
         }
     }
 
@@ -99,7 +91,7 @@ pub async fn get_question_backend_id(slug: &str, url: &str) -> usize {
     .data
     .unwrap();
 
-    data.question.unwrap().question_id.unwrap().parse().unwrap()
+    data.question.question_id.parse().unwrap()
 }
 
 pub async fn get_example_tests(slug: &str, url: &str) -> Vec<Example> {
@@ -115,10 +107,10 @@ pub async fn get_example_tests(slug: &str, url: &str) -> Vec<Example> {
 
     let mut example_tests = vec![];
 
-    let question = data.question.unwrap();
+    let question = data.question;
 
-    let input_example = question.example_testcases.unwrap();
-    let output_example = question.sample_test_case.unwrap();
+    let input_example = question.example_testcases;
+    let output_example = question.sample_test_case;
 
     for (input, output) in input_example.split('\n').zip(output_example.split('\n')) {
         example_tests.push(Example::new(input.to_string(), output.to_string()));

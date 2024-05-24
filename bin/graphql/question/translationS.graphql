@@ -3,10 +3,10 @@ schema {
 }
 
 type Query {
-  question(titleSlug: String!): Question
+  question(titleSlug: String!): Question!
 }
 
 type Question {
-  translatedTitle: String
-  translatedContent: String
+  translatedTitle: String!
+  translatedContent: String!
 }

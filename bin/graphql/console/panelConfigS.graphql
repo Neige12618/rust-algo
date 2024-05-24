@@ -3,7 +3,7 @@ schema {
 }
 
 type Query {
-  question(titleSlug: String!): Question
+  question(titleSlug: String!): Question!
 }
 
 type Question {
@@ -14,7 +14,7 @@ type Question {
   enableSubmit: Boolean
   enableTestMode: Boolean
   jsonExampleTestcases: String
-  exampleTestcases: String
+  exampleTestcases: String!
   metaData: String
-  sampleTestCase: String
+  sampleTestCase: String!
 }

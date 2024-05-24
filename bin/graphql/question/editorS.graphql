@@ -3,13 +3,13 @@ schema {
 }
 
 type Query {
-  question(titleSlug: String!): Question
+  question(titleSlug: String!): Question!
 }
 
 type Question {
-  questionId: String
-  questionFrontendId: String
-  codeSnippets: [CodeSnippet]
+  questionId: String!
+  questionFrontendId: String!
+  codeSnippets: [CodeSnippet!]!
   envInfo: String
   enableRunCode: Boolean
   hasFrontendPreview: Boolean
@@ -17,7 +17,7 @@ type Question {
 }
 
 type CodeSnippet {
-  lang: String
-  langSlug: String
-  code: String
+  lang: String!
+  langSlug: String!
+  code: String!
 }

@@ -10,34 +10,34 @@ query problemsetQuestionList(
     skip: $skip
     filters: $filters
   ) {
-    hasMore
+    # hasMore
     total
     questions {
-      acRate
+      # acRate
       difficulty
-      freqBar
+      # freqBar
       frontendQuestionId
-      isFavor
-      paidOnly
-      solutionNum
-      status
+      # isFavor
+      # paidOnly
+      # solutionNum
+      # status
       title
       titleCn
       titleSlug
-      topicTags {
-        name
-        nameTranslated
-        id
-        slug
-      }
-      extra {
-        hasVideoSolution
-        topCompanyTags {
-          imgUrl
-          slug
-          numSubscribed
-        }
-      }
+      # topicTags {
+      #   name
+      #   nameTranslated
+      #   id
+      #   slug
+      # }
+      # extra {
+      #   hasVideoSolution
+      #   topCompanyTags {
+      #     imgUrl
+      #     slug
+      #     numSubscribed
+      #   }
+      # }
     }
   }
 }
