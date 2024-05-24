@@ -42,3 +42,28 @@ pub struct FinishedResult {
     pub compile_error: Option<String>,
     pub full_compile_error: Option<String>,
 }
+
+impl FinishedResult {
+    pub fn ac(&self) -> bool {
+        self.status_msg == "Accepted"
+    }
+
+    pub fn wa(&self) -> bool {
+        self.status_msg == "Wrong Answer"
+    }
+
+    pub fn wa_output(&self) -> String {
+        format!(
+            "{}/{}\n测试数据:\n{}\n你的输出:\n{}\n期望输出:\n{}",
+            self.total_correct.unwrap(),
+            self.total_testcases.unwrap(),
+            self.last_testcase.as_ref().unwrap(),
+            self.code_output.as_ref().unwrap(),
+            self.expected_output.as_ref().unwrap()
+        )
+    }
+
+    pub fn ac_output(&self) -> String {
+        format!("{}", self.runtime_percentile.unwrap())
+    }
+}

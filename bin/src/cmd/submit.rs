@@ -28,7 +28,13 @@ pub async fn submit_and_check(_args: SubmitArgs) {
                 sleep(Duration::from_secs(1)).await;
             }
             SubResult::Finished(e) => {
-                println!("{:?}", e);
+                if e.wa() {
+                    println!("{}", e.wa_output());
+                } else if e.ac() {
+                    println!("{}", e.ac_output());
+                } else {
+                    println!("{:?}", e);
+                }
                 break;
             }
         }
