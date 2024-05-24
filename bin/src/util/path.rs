@@ -24,7 +24,7 @@ pub fn get_project_root() -> io::Result<PathBuf> {
     ))
 }
 
-pub fn get_solution_by_id(id: usize) -> io::Result<PathBuf> {
+pub fn get_solution_by_id(id: &str) -> io::Result<PathBuf> {
     let root_path = get_project_root()?;
     let file_name = format!("{}/solution/solution{}.rs", root_path.to_str().unwrap(), id);
 
@@ -45,4 +45,9 @@ pub fn get_graphql_url() -> String {
 
 pub fn get_base_url() -> String {
     dotenvy::var("LEETCODE_BASE_URL").unwrap()
+}
+
+pub fn gen_link_by_slug(slug: &str) -> String {
+    let url = dotenvy::var("LEETCODE_BASE_URL").unwrap();
+    format!("{}/problems/{}/", url, slug)
 }

@@ -4,13 +4,17 @@ use reqwest::Client;
 use crate::{
     graphql::schema::{console_panel_config, questionEditorData, questionTranslations},
     model::{
-        daily_info::QuestionBaseInfo, example::Example, question::Question, template::CodeTemplate,
+        example::Example,
+        question::QuestionBaseInfo,
+        question::{FilterQuestion, TranlatedQuestion},
+        template::CodeTemplate,
     },
 };
 
 use super::schema::{
-    calendar_task_schedule, consolePanelConfig, question_editor_data, question_translations,
-    CalendarTaskSchedule,
+    calendar_task_schedule, consolePanelConfig, problemsetQuestionList,
+    problemset_question_list::{self, QuestionListFilterInput},
+    question_editor_data, question_translations, CalendarTaskSchedule,
 };
 
 pub async fn get<Q: GraphQLQuery>(url: &str, variables: Q::Variables) -> Response<Q::ResponseData> {
@@ -41,7 +45,7 @@ pub async fn get_question_base_info(url: &str) -> QuestionBaseInfo {
     )
 }
 
-pub async fn get_question_translations(slug: &str, url: &str) -> Question {
+pub async fn get_question_translations(slug: &str, url: &str) -> TranlatedQuestion {
     let data = get::<questionTranslations>(
         url,
         question_translations::Variables {
@@ -53,7 +57,7 @@ pub async fn get_question_translations(slug: &str, url: &str) -> Question {
     .unwrap();
     let question = data.question;
 
-    Question::new(question.translated_title, question.translated_content)
+    TranlatedQuestion::new(question.translated_title, question.translated_content)
 }
 
 // 此接口只需要获得代码模板
@@ -117,4 +121,35 @@ pub async fn get_example_tests(slug: &str, url: &str) -> Vec<Example> {
     }
 
     example_tests
+}
+
+pub async fn search_question(keyword: &str, url: &str) -> Vec<FilterQuestion> {
+    let data = get::<problemsetQuestionList>(
+        url,
+        problemset_question_list::Variables {
+            category_slug: "all-code-essentials".to_string(),
+            limit: 10,
+            skip: 0,
+            filters: Some(QuestionListFilterInput {
+                searchKeywords: keyword.to_string(),
+            }),
+        },
+    )
+    .await
+    .data
+    .unwrap();
+
+    let questions = data.problemset_question_list.questions;
+
+    questions
+        .into_iter()
+        .map(|q| {
+            FilterQuestion::new(
+                q.difficulty,
+                q.frontend_question_id,
+                q.title_cn,
+                q.title_slug,
+            )
+        })
+        .collect()
 }

@@ -12,13 +12,23 @@ use crate::{
 
 use super::SubmitArgs;
 
-pub async fn submit_and_check(_args: SubmitArgs) {
+pub async fn submit_and_check(args: SubmitArgs) {
     let graphql_url = get_graphql_url();
 
-    let base_info = get_question_base_info(&graphql_url).await;
-    let backend_id = get_question_backend_id(&base_info.slug, &graphql_url).await;
+    let (response, base_info) = if let Some(_) = args.id {
+        todo!()
+    } else {
+        let base_info = get_question_base_info(&graphql_url).await;
+        let backend_id = get_question_backend_id(&base_info.slug, &graphql_url).await;
 
-    let response = submit::submit(backend_id, &base_info.slug, &get_code(base_info.id).await).await;
+        let response = submit::submit(
+            &backend_id.to_string(),
+            &base_info.slug,
+            &get_code(&base_info.id).await,
+        )
+        .await;
+        (response, base_info)
+    };
 
     loop {
         match submit::get_sub_result(response.submission_id, &base_info.slug).await {
@@ -40,7 +50,7 @@ pub async fn submit_and_check(_args: SubmitArgs) {
     }
 }
 
-async fn get_code(id: usize) -> String {
+async fn get_code(id: &str) -> String {
     let file_path = get_solution_by_id(id).unwrap();
 
     if !file_path.exists() {
@@ -73,7 +83,7 @@ mod test {
 
     #[tokio::test]
     async fn test_get_code() {
-        let code = get_code(274).await;
+        let code = get_code("274").await;
         println!("{}", code);
     }
 }

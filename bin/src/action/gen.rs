@@ -1,13 +1,14 @@
 use tokio::io::AsyncWriteExt;
 
 use crate::{
-    model::daily_info::QuestionInfo,
+    model::question::QuestionInfo,
     util::path::{get_solution_by_id, get_solution_lib},
 };
 
 pub async fn create_template_file(daily_info: QuestionInfo) {
-    let question_id = daily_info.base_info.id;
-    let file_path = get_solution_by_id(question_id).unwrap();
+    // frontend_id, name, link, content, code_template
+    let question_id = daily_info.base_info.id.clone();
+    let file_path = get_solution_by_id(&question_id).unwrap();
 
     if file_path.exists() {
         println!("file already exists: {}", file_path.to_str().unwrap());
@@ -28,10 +29,12 @@ pub async fn create_template_file(daily_info: QuestionInfo) {
         .unwrap();
 
     lib_file
-        .write(format!("pub mod solution{};\n", question_id).as_bytes())
+        .write(format!("pub mod solution{};\n", &question_id).as_bytes())
         .await
         .unwrap();
     lib_file.flush().await.unwrap();
+
+    println!("file created: {}", file_path.to_str().unwrap());
 }
 
 #[cfg(test)]

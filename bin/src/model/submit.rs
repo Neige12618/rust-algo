@@ -1,14 +1,14 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Debug)]
-pub struct SubmitRequest {
-    lang: String,
-    question_id: usize,
-    typed_code: String,
+pub struct SubmitRequest<'a> {
+    lang: &'a str,
+    question_id: &'a str,
+    typed_code: &'a str,
 }
 
-impl SubmitRequest {
-    pub fn new(lang: String, question_id: usize, typed_code: String) -> Self {
+impl<'a> SubmitRequest<'a> {
+    pub fn new(lang: &'a str, question_id: &'a str, typed_code: &'a str) -> Self {
         Self {
             lang,
             question_id,

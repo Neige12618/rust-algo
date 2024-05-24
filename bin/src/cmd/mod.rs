@@ -19,7 +19,7 @@ pub enum Commands {
 #[derive(clap::Args, Debug)]
 pub struct FetchArgs {
     #[arg(short, long)]
-    id: Option<usize>,
+    filter: Option<String>,
 }
 
 #[derive(clap::Args, Debug)]
