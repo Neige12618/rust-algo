@@ -27,7 +27,10 @@ pub async fn submit_and_check(args: SubmitArgs) {
             if filter_questions.is_empty() {
                 panic!("no question found");
             }
-            if let Some(q) = filter_questions.into_iter().find(|q| q.id == id) {
+            if let Some(q) = filter_questions
+                .into_iter()
+                .find(|q| q.id == id || q.slug == id)
+            {
                 link = Some(gen_link_by_slug(&q.slug));
                 question = Some(q);
                 break;

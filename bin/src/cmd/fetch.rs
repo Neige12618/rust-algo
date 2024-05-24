@@ -19,7 +19,7 @@ pub async fn fetch_and_gen(args: FetchArgs) {
     let base_info = if let Some(filter) = args.filter {
         let mut filter_questions = search_question(&filter, &graphql_url, 0, 10).await;
         for (index, value) in filter_questions.iter().enumerate() {
-            println!("{}) {} {}", index, value.id, value.title);
+            println!("{}) {} {} ({})", index, value.id, value.title, value.slug);
         }
         println!("请输入题目前编号（默认为0）:");
         let index = get_correct_number(filter_questions.len());
