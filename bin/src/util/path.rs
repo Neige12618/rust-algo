@@ -51,3 +51,7 @@ pub fn gen_link_by_slug(slug: &str) -> String {
     let url = dotenvy::var("LEETCODE_BASE_URL").unwrap();
     format!("{}/problems/{}/", url, slug)
 }
+
+pub fn get_leetcode_session() -> String {
+    dotenvy::var("LEETCODE_SESSION").expect("LEETCODE_SESSION not set")
+}

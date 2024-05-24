@@ -25,5 +25,5 @@ pub struct FetchArgs {
 #[derive(clap::Args, Debug)]
 pub struct SubmitArgs {
     #[arg(short, long)]
-    id: Option<usize>,
+    id: Option<String>,
 }

@@ -5,9 +5,9 @@ use tokio::{io::AsyncReadExt, time::sleep};
 
 use crate::{
     action::submit,
-    graphql::request::{get_question_backend_id, get_question_base_info},
-    model::sub_result::SubResult,
-    util::path::{get_graphql_url, get_solution_by_id},
+    graphql::request::{get_question_backend_id, get_question_base_info, search_question},
+    model::{question::QuestionBaseInfo, sub_result::SubResult},
+    util::path::{gen_link_by_slug, get_graphql_url, get_solution_by_id},
 };
 
 use super::SubmitArgs;
@@ -15,20 +15,26 @@ use super::SubmitArgs;
 pub async fn submit_and_check(args: SubmitArgs) {
     let graphql_url = get_graphql_url();
 
-    let (response, base_info) = if let Some(_) = args.id {
-        todo!()
+    let base_info = if let Some(id) = args.id {
+        let mut filter_questions = search_question(&id, &graphql_url).await;
+        if filter_questions.is_empty() {
+            panic!("no question found");
+        }
+        let question = filter_questions.swap_remove(0);
+        let link = gen_link_by_slug(&question.slug);
+        QuestionBaseInfo::new(question.id, link, question.title, question.slug)
     } else {
-        let base_info = get_question_base_info(&graphql_url).await;
-        let backend_id = get_question_backend_id(&base_info.slug, &graphql_url).await;
-
-        let response = submit::submit(
-            &backend_id.to_string(),
-            &base_info.slug,
-            &get_code(&base_info.id).await,
-        )
-        .await;
-        (response, base_info)
+        get_question_base_info(&graphql_url).await
     };
+
+    let backend_id = get_question_backend_id(&base_info.slug, &graphql_url).await;
+
+    let response = submit::submit(
+        &backend_id.to_string(),
+        &base_info.slug,
+        &get_code(&base_info.id).await,
+    )
+    .await;
 
     loop {
         match submit::get_sub_result(response.submission_id, &base_info.slug).await {

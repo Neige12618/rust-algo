@@ -5,12 +5,12 @@ use crate::{
         sub_result::SubResult,
         submit::{SubmitRequest, SubmitResponse},
     },
-    util::path::get_base_url,
+    util::path::{get_base_url, get_leetcode_session},
 };
 
 pub async fn submit(backend_id: &str, slug: &str, code: &str) -> SubmitResponse {
     let url = get_base_url();
-    let leetcode_session = dotenvy::var("LEETCODE_SESSION").expect("LEETCODE_SESSION not set");
+    let leetcode_session = get_leetcode_session();
     let client = Client::new();
 
     let submit_request = SubmitRequest::new("rust", backend_id, code);
@@ -71,8 +71,8 @@ mod test {
         let graphql_url = get_graphql_url();
 
         let question_base_info = get_question_base_info(&graphql_url).await;
-        let submission_id = 534224963;
+        let submission_id = 534484892;
         let submission_result = get_sub_result(submission_id, &question_base_info.slug).await;
-        println!("{:?}", submission_result);
+        println!("{:#?}", submission_result);
     }
 }
