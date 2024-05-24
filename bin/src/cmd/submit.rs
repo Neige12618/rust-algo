@@ -7,14 +7,13 @@ use crate::{
     action::submit,
     graphql::request::{get_question_backend_id, get_question_base_info},
     model::sub_result::SubResult,
-    util::path::get_solution_by_id,
+    util::path::{get_graphql_url, get_solution_by_id},
 };
 
 use super::SubmitArgs;
 
 pub async fn submit_and_check(_args: SubmitArgs) {
-    let url = dotenvy::var("LEETCODE_BASE_URL").unwrap();
-    let graphql_url = format!("{}/graphql", url);
+    let graphql_url = get_graphql_url();
 
     let base_info = get_question_base_info(&graphql_url).await;
     let backend_id = get_question_backend_id(&base_info.slug, &graphql_url).await;

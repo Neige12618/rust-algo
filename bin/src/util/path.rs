@@ -37,3 +37,12 @@ pub fn get_solution_lib() -> io::Result<PathBuf> {
 
     Ok(PathBuf::from(file_name))
 }
+
+pub fn get_graphql_url() -> String {
+    let url = dotenvy::var("LEETCODE_BASE_URL").unwrap();
+    format!("{}/graphql/", url)
+}
+
+pub fn get_base_url() -> String {
+    dotenvy::var("LEETCODE_BASE_URL").unwrap()
+}

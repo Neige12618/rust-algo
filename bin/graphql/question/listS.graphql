@@ -1,0 +1,52 @@
+type Query {
+  problemsetQuestionList(
+    categorySlug: String!
+    limit: Int!
+    skip: Int!
+    filters: QuestionListFilterInput
+  ): ProblemsetQuestionListResponse
+}
+
+type ProblemsetQuestionListResponse {
+  hasMore: Boolean
+  total: Int
+  questions: [Question]
+}
+
+type Question {
+  acRate: Float
+  difficulty: String
+  freqBar: Float
+  frontendQuestionId: String!
+  isFavor: Boolean
+  paidOnly: Boolean
+  solutionNum: Int
+  status: String
+  title: String
+  titleCn: String
+  titleSlug: String!
+  topicTags: [TopicTag]
+  extra: QuestionExtra
+}
+
+type TopicTag {
+  name: String
+  nameTranslated: String
+  id: ID
+  slug: String
+}
+
+type QuestionExtra {
+  hasVideoSolution: Boolean
+  topCompanyTags: [TopCompanyTag]
+}
+
+type TopCompanyTag {
+  imgUrl: String
+  slug: String
+  numSubscribed: Int
+}
+
+input QuestionListFilterInput {
+  searchKeywords: String!
+}

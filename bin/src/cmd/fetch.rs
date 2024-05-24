@@ -5,13 +5,13 @@ use crate::{
         get_question_translations,
     },
     model::daily_info::QuestionInfo,
+    util::path::get_graphql_url,
 };
 
 use super::FetchArgs;
 
 pub async fn fetch_and_gen(_args: FetchArgs) {
-    let url = dotenvy::var("LEETCODE_BASE_URL").unwrap();
-    let graphql_url = format!("{}/graphql/", &url);
+    let graphql_url = get_graphql_url();
 
     let question_base_info = get_question_base_info(&graphql_url).await;
     let question_translation =

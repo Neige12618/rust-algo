@@ -1,12 +1,15 @@
 use reqwest::Client;
 
-use crate::model::{
-    sub_result::SubResult,
-    submit::{SubmitRequest, SubmitResponse},
+use crate::{
+    model::{
+        sub_result::SubResult,
+        submit::{SubmitRequest, SubmitResponse},
+    },
+    util::path::get_base_url,
 };
 
 pub async fn submit(id: usize, slug: &str, code: &str) -> SubmitResponse {
-    let url = dotenvy::var("LEETCODE_BASE_URL").expect("LEETCODE_BASE_URL not set");
+    let url = get_base_url();
     let leetcode_session = dotenvy::var("LEETCODE_SESSION").expect("LEETCODE_SESSION not set");
     let client = Client::new();
 
@@ -26,7 +29,7 @@ pub async fn submit(id: usize, slug: &str, code: &str) -> SubmitResponse {
 }
 
 pub async fn get_sub_result(id: usize, slug: &str) -> SubResult {
-    let base_url = dotenvy::var("LEETCODE_BASE_URL").expect("LEETCODE_BASE_URL not set");
+    let base_url = get_base_url();
     let client = Client::new();
 
     let response = client
@@ -43,14 +46,13 @@ pub async fn get_sub_result(id: usize, slug: &str) -> SubResult {
 
 #[cfg(test)]
 mod test {
-    use crate::graphql::request::get_question_base_info;
+    use crate::{graphql::request::get_question_base_info, util::path::get_graphql_url};
 
     use super::*;
 
     #[tokio::test]
     async fn test_submit() {
-        let url = dotenvy::var("LEETCODE_BASE_URL").unwrap();
-        let graphql_url = format!("{}/graphql/", &url);
+        let graphql_url = get_graphql_url();
 
         let question_base_info = get_question_base_info(&graphql_url).await;
 
@@ -66,8 +68,7 @@ mod test {
 
     #[tokio::test]
     async fn test_get_submissions() {
-        let url = dotenvy::var("LEETCODE_BASE_URL").unwrap();
-        let graphql_url = format!("{}/graphql/", &url);
+        let graphql_url = get_graphql_url();
 
         let question_base_info = get_question_base_info(&graphql_url).await;
         let submission_id = 534224963;

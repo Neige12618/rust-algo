@@ -34,16 +34,25 @@ pub struct questionEditorData;
 )]
 pub struct consolePanelConfig;
 
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "graphql/question/listS.graphql",
+    query_path = "graphql/question/listQ.graphql",
+    response_derives = "Debug"
+)]
+pub struct problemsetQuestionList;
+
 #[cfg(test)]
 mod test {
-    use crate::graphql::request::get;
+    use problemset_question_list::QuestionListFilterInput;
+
+    use crate::{graphql::request::get, util::path::get_graphql_url};
 
     use super::*;
 
     #[tokio::test]
     async fn test_calendar_task_schedule() {
-        let url = dotenvy::var("LEETCODE_BASE_URL").unwrap();
-        let url = format!("{}/graphql", url);
+        let url = get_graphql_url();
         let response_body =
             get::<CalendarTaskSchedule>(&url, calendar_task_schedule::Variables { days: 0 }).await;
         assert_eq!(response_body.errors, None);
@@ -53,8 +62,7 @@ mod test {
 
     #[tokio::test]
     async fn test_question_translations() {
-        let url = dotenvy::var("LEETCODE_BASE_URL").unwrap();
-        let url = format!("{}/graphql", url);
+        let url = get_graphql_url();
         let response_body = get::<questionTranslations>(
             &url,
             question_translations::Variables {
@@ -69,8 +77,7 @@ mod test {
 
     #[tokio::test]
     async fn test_question_editor_data() {
-        let url = dotenvy::var("LEETCODE_BASE_URL").unwrap();
-        let url = format!("{}/graphql", url);
+        let url = get_graphql_url();
         let response_body = get::<questionEditorData>(
             &url,
             question_editor_data::Variables {
@@ -85,12 +92,32 @@ mod test {
 
     #[tokio::test]
     async fn test_console_panel_config() {
-        let url = dotenvy::var("LEETCODE_BASE_URL").unwrap();
-        let url = format!("{}/graphql", url);
+        let url = get_graphql_url();
         let response_body = get::<consolePanelConfig>(
             &url,
             console_panel_config::Variables {
                 title_slug: "find-players-with-zero-or-one-losses".to_string(),
+            },
+        )
+        .await;
+
+        assert_eq!(response_body.errors, None);
+
+        println!("{response_body:?}");
+    }
+
+    #[tokio::test]
+    async fn test_problemset_question_list() {
+        let url = get_graphql_url();
+        let response_body = get::<problemsetQuestionList>(
+            &url,
+            problemset_question_list::Variables {
+                category_slug: "all-code-essentials".to_string(),
+                limit: 50,
+                skip: 0,
+                filters: Some(QuestionListFilterInput {
+                    searchKeywords: "two-sum".to_string(),
+                }),
             },
         )
         .await;
