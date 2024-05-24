@@ -54,7 +54,13 @@ impl FinishedResult {
 
     pub fn wa_output(&self) -> String {
         format!(
-            "{}/{}\n测试数据:\n{}\n你的输出:\n{}\n期望输出:\n{}",
+            r#"{}/{}
+测试数据:
+{}
+你的输出:
+{}
+期望输出:
+{}"#,
             self.total_correct.unwrap(),
             self.total_testcases.unwrap(),
             self.last_testcase.as_ref().unwrap(),
@@ -64,6 +70,12 @@ impl FinishedResult {
     }
 
     pub fn ac_output(&self) -> String {
-        format!("{}", self.runtime_percentile.unwrap())
+        format!(
+            "{}ms 超过了{}%\n{}mb 超过了{}%",
+            self.elapsed_time.unwrap(),
+            self.runtime_percentile.unwrap(),
+            self.memory as f64 / 1000000.0,
+            self.memory_percentile.unwrap()
+        )
     }
 }

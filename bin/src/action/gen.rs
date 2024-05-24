@@ -10,7 +10,7 @@ pub async fn create_template_file(daily_info: QuestionInfo) {
     let file_path = get_solution_by_id(question_id).unwrap();
 
     if file_path.exists() {
-        println!("file already exists");
+        println!("file already exists: {}", file_path.to_str().unwrap());
         return;
     }
 
@@ -28,7 +28,7 @@ pub async fn create_template_file(daily_info: QuestionInfo) {
         .unwrap();
 
     lib_file
-        .write(format!("pub mod solution{};", question_id).as_bytes())
+        .write(format!("pub mod solution{};\n", question_id).as_bytes())
         .await
         .unwrap();
     lib_file.flush().await.unwrap();
