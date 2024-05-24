@@ -14,15 +14,33 @@ use super::SubmitArgs;
 
 pub async fn submit_and_check(args: SubmitArgs) {
     let graphql_url = get_graphql_url();
+    let mut max_attempt_times = 5;
+    let mut skip = 0;
+    let step = 30;
 
     let base_info = if let Some(id) = args.id {
-        let mut filter_questions = search_question(&id, &graphql_url).await;
-        if filter_questions.is_empty() {
-            panic!("no question found");
+        let mut question = None;
+        let mut link = None;
+        while max_attempt_times > 0 {
+            let filter_questions = search_question(&id, &graphql_url, skip, step).await;
+            skip += step;
+            if filter_questions.is_empty() {
+                panic!("no question found");
+            }
+            if let Some(q) = filter_questions.into_iter().find(|q| q.id == id) {
+                link = Some(gen_link_by_slug(&q.slug));
+                question = Some(q);
+                break;
+            } else {
+                println!("question not found, skip {}", skip);
+                max_attempt_times -= 1;
+            }
         }
-        let question = filter_questions.swap_remove(0);
-        let link = gen_link_by_slug(&question.slug);
-        QuestionBaseInfo::new(question.id, link, question.title, question.slug)
+        if let (Some(question), Some(link)) = (question, link) {
+            QuestionBaseInfo::new(question.id, link, question.title, question.slug)
+        } else {
+            panic!("question not found");
+        }
     } else {
         get_question_base_info(&graphql_url).await
     };

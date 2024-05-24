@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub struct FilterQuestion {
     pub difficulty: String,
     pub id: String,

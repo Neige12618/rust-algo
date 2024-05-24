@@ -17,7 +17,7 @@ pub async fn fetch_and_gen(args: FetchArgs) {
     let graphql_url = get_graphql_url();
 
     let base_info = if let Some(filter) = args.filter {
-        let mut filter_questions = search_question(&filter, &graphql_url).await;
+        let mut filter_questions = search_question(&filter, &graphql_url, 0, 10).await;
         for (index, value) in filter_questions.iter().enumerate() {
             println!("{}) {} {}", index, value.id, value.title);
         }

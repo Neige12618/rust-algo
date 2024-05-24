@@ -123,13 +123,18 @@ pub async fn get_example_tests(slug: &str, url: &str) -> Vec<Example> {
     example_tests
 }
 
-pub async fn search_question(keyword: &str, url: &str) -> Vec<FilterQuestion> {
+pub async fn search_question(
+    keyword: &str,
+    url: &str,
+    skip: i64,
+    limit: i64,
+) -> Vec<FilterQuestion> {
     let data = get::<problemsetQuestionList>(
         url,
         problemset_question_list::Variables {
             category_slug: "all-code-essentials".to_string(),
-            limit: 10,
-            skip: 0,
+            limit,
+            skip,
             filters: Some(QuestionListFilterInput {
                 searchKeywords: keyword.to_string(),
             }),
