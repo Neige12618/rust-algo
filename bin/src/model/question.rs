@@ -83,7 +83,7 @@ impl QuestionInfo {
             .to_string();
         format!(
             r#"/// {}.{}
-///
+/// {}
 {}
 /// <a href="{}">{}</a>
 pub struct Solution;
@@ -100,6 +100,7 @@ mod test {{
 }}"#,
             self.base_info.id,
             self.base_info.name,
+            self.base_info.slug,
             comment,
             self.base_info.link,
             self.base_info.name,
