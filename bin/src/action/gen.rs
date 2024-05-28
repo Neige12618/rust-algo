@@ -2,7 +2,7 @@ use tokio::io::AsyncWriteExt;
 
 use crate::{
     model::question::QuestionInfo,
-    util::path::{get_solution_by_id, get_solution_lib},
+    util::file::{get_solution_by_id, get_solution_lib},
 };
 
 pub async fn create_template_file(daily_info: QuestionInfo) {
