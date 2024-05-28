@@ -10,9 +10,11 @@ pub struct Cli {
 
 #[derive(clap::Subcommand, Debug)]
 pub enum Commands {
-    /// 获取今日题目并写入对应文件
+    /// 获取今日题目并写入对应文件(alias: f)
+    #[command(alias = "f")]
     Fetch(FetchArgs),
-    /// 提交今日题目并判题
+    /// 提交今日题目并判题(alias: s)
+    #[command(alias = "s")]
     Submit(SubmitArgs),
 }
 
