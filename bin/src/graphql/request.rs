@@ -136,7 +136,7 @@ pub async fn search_question(
             limit,
             skip,
             filters: Some(QuestionListFilterInput {
-                searchKeywords: keyword.to_string(),
+                search_keywords: keyword.to_string(),
             }),
         },
     )

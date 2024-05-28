@@ -1,16 +1,13 @@
 [package]
-name = "bin"
+name = "levers"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-tokio = { version = "*", features = ["rt-multi-thread", "macros", "fs"] }
-reqwest = { version = "*", features = ["json"] }
-graphql_client = { version = "*" }
-dotenvy = { version = "*" }
-serde = { version = "*", features = ["derive"] }
-serde_json = { version = "*" }
-clap = { version = "*", features = ["derive"] }
-
-[dev-dependencies]
-"solution" = { path = "../solution" }
+tokio = { version = "^1.37", features = ["rt-multi-thread", "macros", "fs"] }
+reqwest = { version = "^0.12", features = ["json"] }
+graphql_client = { version = "^0.14" }
+dotenvy = { version = "^0.15" }
+serde = { version = "^1", features = ["derive"] }
+serde_json = { version = "^1" }
+clap = { version = "^4.5", features = ["derive"] }

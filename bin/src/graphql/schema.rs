@@ -116,7 +116,7 @@ mod test {
                 limit: 50,
                 skip: 0,
                 filters: Some(QuestionListFilterInput {
-                    searchKeywords: "two-sum".to_string(),
+                    search_keywords: "two-sum".to_string(),
                 }),
             },
         )
