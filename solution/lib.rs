@@ -11,6 +11,7 @@ pub mod solution274;
 pub mod solution2831;
 pub mod solution2903;
 pub mod solution2928;
+pub mod solution2929;
 pub mod solution2951;
 pub mod solution2965;
 pub mod solution2981;
