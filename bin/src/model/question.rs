@@ -95,7 +95,7 @@ mod test {{
     use super::*;
     #[test]
     fn test_1() {{
-        assert_eq!(1, 1);
+        
     }}
 }}"#,
             self.base_info.id,
