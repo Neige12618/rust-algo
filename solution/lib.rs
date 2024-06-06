@@ -13,15 +13,16 @@ pub mod solution2831;
 pub mod solution2903;
 pub mod solution2928;
 pub mod solution2929;
+pub mod solution2938;
 pub mod solution2951;
 pub mod solution2965;
 pub mod solution2981;
 pub mod solution2982;
 pub mod solution3067;
+pub mod solution3072;
 pub mod solution3163;
 pub mod solution3164;
 pub mod solution575;
+pub mod solution647;
 #[path = "solutionLCR 006.rs"]
 pub mod solutionlcr006;
-pub mod solution647;
-pub mod solution3072;
