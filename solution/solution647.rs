@@ -34,6 +34,7 @@
 /// <a href="https://leetcode.cn/problems/palindromic-substrings/">回文子串</a>
 pub struct Solution;
 
+// 枚举中间
 impl Solution {
     pub fn count_substrings(s: String) -> i32 {
         let n = s.len();
