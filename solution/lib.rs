@@ -27,5 +27,6 @@ pub mod solution3163;
 pub mod solution3164;
 pub mod solution575;
 pub mod solution647;
+pub mod solution881;
 #[path = "solutionLCR 006.rs"]
 pub mod solutionlcr006;
