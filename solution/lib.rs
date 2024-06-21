@@ -38,5 +38,7 @@ pub mod solution522;
 pub mod solution575;
 pub mod solution647;
 pub mod solution881;
+#[path = "solutionLCP 61.rs"]
+pub mod solutionlcp61;
 #[path = "solutionLCR 006.rs"]
 pub mod solutionlcr006;
