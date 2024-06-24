@@ -34,6 +34,7 @@ pub mod solution312;
 pub mod solution3163;
 pub mod solution3164;
 pub mod solution419;
+pub mod solution503;
 pub mod solution520;
 pub mod solution521;
 pub mod solution522;
