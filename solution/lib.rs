@@ -10,8 +10,10 @@ pub mod solution2288;
 pub mod solution2382;
 pub mod solution260;
 pub mod solution2663;
+pub mod solution2710;
 pub mod solution2713;
 pub mod solution2732;
+pub mod solution2734;
 pub mod solution274;
 pub mod solution2741;
 pub mod solution2742;
@@ -48,4 +50,3 @@ pub mod solution881;
 pub mod solutionlcp61;
 #[path = "solutionLCR 006.rs"]
 pub mod solutionlcr006;
-pub mod solution2734;
