@@ -3,6 +3,7 @@ pub mod solution1103;
 pub mod solution15;
 pub mod solution1673;
 pub mod solution1738;
+pub mod solution1958;
 pub mod solution198;
 pub mod solution2028;
 pub mod solution2065;
