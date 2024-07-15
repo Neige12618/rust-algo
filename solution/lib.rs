@@ -58,6 +58,7 @@ pub mod solution521;
 pub mod solution522;
 pub mod solution575;
 pub mod solution647;
+pub mod solution721;
 pub mod solution724;
 pub mod solution807;
 pub mod solution881;
