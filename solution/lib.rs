@@ -70,3 +70,4 @@ pub mod solution881;
 pub mod solutionlcp61;
 #[path = "solutionLCR 006.rs"]
 pub mod solutionlcr006;
+pub mod solution2850;
