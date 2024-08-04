@@ -95,7 +95,7 @@ mod test {
         assert_eq!(Solution::missing_rolls(vec![1, 2, 3, 4], 6, 4), vec![]);
         assert_eq!(
             Solution::missing_rolls(vec![1, 5, 6], 3, 4),
-            vec![2, 2, 2, 3]
+            vec![3, 2, 2, 2]
         );
     }
 }

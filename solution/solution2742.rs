@@ -59,6 +59,6 @@ mod test {
     use super::*;
     #[test]
     fn test_1() {
-        assert_eq!(Solution::paint_walls(vec![], vec![]), 1)
+        assert_eq!(Solution::paint_walls(vec![1, 2, 3, 2], vec![1, 2, 3, 2]), 3)
     }
 }

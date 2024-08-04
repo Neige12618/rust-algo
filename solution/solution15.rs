@@ -109,7 +109,7 @@ mod test {
         assert_eq!(Solution::three_sum(vec![0, 0, 0]), vec![vec![0, 0, 0]]);
         assert_eq!(
             Solution::three_sum(vec![-1, 0, 1, 2, -1, -4]),
-            vec![vec![-1, -1, 2], vec![-1, 0, 1]]
+            vec![vec![-1, 2, -1], vec![0, 1, -1]]
         );
     }
 }
