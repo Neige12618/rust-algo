@@ -103,7 +103,7 @@ mod test {
 
         assert_eq!(response_body.errors, None);
 
-        println!("{response_body:?}");
+        println!("{response_body:#?}");
     }
 
     #[tokio::test]

@@ -1,3 +1,4 @@
+#![allow(unused)]
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]

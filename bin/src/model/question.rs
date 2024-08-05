@@ -1,3 +1,4 @@
+#![allow(unused)]
 #[derive(Debug)]
 pub struct FilterQuestion {
     pub difficulty: String,
